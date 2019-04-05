@@ -8,6 +8,7 @@ import com.taobao.arthas.core.shell.command.CommandProcess;
 import com.taobao.arthas.core.shell.handlers.Handler;
 import com.taobao.arthas.core.shell.handlers.shell.QExitHandler;
 import com.taobao.arthas.core.shell.session.Session;
+import com.taobao.arthas.core.util.DateUtils;
 import com.taobao.arthas.core.util.LogUtil;
 import com.taobao.arthas.core.util.NetUtils;
 import com.taobao.arthas.core.util.NetUtils.Response;
@@ -22,6 +23,7 @@ import com.taobao.text.Color;
 import com.taobao.text.Decoration;
 import com.taobao.text.Style;
 import com.taobao.text.renderers.ThreadRenderer;
+import com.taobao.text.ui.LabelElement;
 import com.taobao.text.ui.RowElement;
 import com.taobao.text.ui.TableElement;
 import com.taobao.text.util.RenderUtil;
@@ -403,11 +405,15 @@ public class DashboardCommand extends AnnotatedCommand {
             int runtimeInfoHeight = lowerHalf / 2;
             int heapInfoHeight = lowerHalf - runtimeInfoHeight;
 
+            //打印当前时间
+            String now = DateUtils.getCurrentDate();
+            now = RenderUtil.render(new LabelElement(now));
+
             String threadInfo = drawThreadInfo(width, threadTopHeight);
             String memoryAndGc = drawMemoryInfoAndGcInfo(width, runtimeInfoHeight);
             String runTimeAndTomcat = drawRuntineInfoAndTomcatInfo(width, heapInfoHeight);
 
-            process.write(threadInfo + memoryAndGc + runTimeAndTomcat);
+            process.write(now + threadInfo + memoryAndGc + runTimeAndTomcat);
 
             count++;
             process.times().incrementAndGet();
