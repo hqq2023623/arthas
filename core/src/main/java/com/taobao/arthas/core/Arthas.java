@@ -62,9 +62,9 @@ public class Arthas {
     private void attachAgent(Configure configure) throws Exception {
         VirtualMachineDescriptor virtualMachineDescriptor = null;
         for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
-            String pid = descriptor.id();
-            if (pid.equals(Integer.toString(configure.getJavaPid()))) {
+            if (descriptor.id().equals(Integer.toString(configure.getJavaPid()))) {
                 virtualMachineDescriptor = descriptor;
+                break;
             }
         }
         VirtualMachine virtualMachine = null;
@@ -78,7 +78,7 @@ public class Arthas {
             Properties targetSystemProperties = virtualMachine.getSystemProperties();
             String targetJavaVersion = JavaVersionUtils.javaVersionStr(targetSystemProperties);
             String currentJavaVersion = JavaVersionUtils.javaVersionStr();
-            if (targetJavaVersion != null && currentJavaVersion != null) {
+            if (targetJavaVersion != null) {
                 if (!targetJavaVersion.equals(currentJavaVersion)) {
                     AnsiLog.warn("Current VM java version: {} do not match target VM java version: {}, attach may fail.",
                                     currentJavaVersion, targetJavaVersion);

@@ -602,12 +602,10 @@ public class ProcessImpl implements Process {
             if (statisticsHandler != null && flushHandlerChain != null) {
                 String data = statisticsHandler.result();
 
-                if (flushHandlerChain != null) {
-                    for (Function<String, String> function : flushHandlerChain) {
-                        data = function.apply(data);
-                        if (function instanceof StatisticsFunction) {
-                            data = ((StatisticsFunction) function).result();
-                        }
+                for (Function<String, String> function : flushHandlerChain) {
+                    data = function.apply(data);
+                    if (function instanceof StatisticsFunction) {
+                        data = ((StatisticsFunction) function).result();
                     }
                 }
             }
