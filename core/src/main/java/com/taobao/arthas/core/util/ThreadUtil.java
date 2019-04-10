@@ -356,8 +356,9 @@ abstract public class ThreadUtil {
         builder.append(getThreadTitle(currentThread)).append("\n").append(locationString).append("\n");
 
         int skip = 11;
+        StackTraceElement ste;
         for (int index = skip; index < stackTraceElementArray.length; index++) {
-            StackTraceElement ste = stackTraceElementArray[index];
+            ste = stackTraceElementArray[index];
             builder.append("        at ")
                     .append(ste.getClassName())
                     .append(".")

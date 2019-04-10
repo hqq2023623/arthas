@@ -132,10 +132,11 @@ public class ThreadCommand extends AnnotatedCommand {
         Long[] tids = topNThreads.keySet().toArray(new Long[0]);
         ThreadInfo[] threadInfos = threadMXBean.getThreadInfo(ArrayUtils.toPrimitive(tids), true, true);
         if (threadInfos == null) {
-            process.write("thread do not exist! id: " + id + "\n");
+            process.write("thread does not exist! id: " + id + "\n");
         } else {
+            String stacktrace;
             for (ThreadInfo info : threadInfos) {
-                String stacktrace = ThreadUtil.getFullStacktrace(info, topNThreads.get(info.getThreadId()));
+                stacktrace = ThreadUtil.getFullStacktrace(info, topNThreads.get(info.getThreadId()));
                 process.write(stacktrace + "\n");
             }
         }
@@ -145,7 +146,7 @@ public class ThreadCommand extends AnnotatedCommand {
         String content;
         ThreadInfo[] threadInfos = threadMXBean.getThreadInfo(new long[]{id}, true, true);
         if (threadInfos == null || threadInfos[0] == null) {
-            content = "thread do not exist! id: " + id + "\n";
+            content = "thread does not exist! id: " + id + "\n";
         } else {
             // no cpu usage info
             content = ThreadUtil.getFullStacktrace(threadInfos[0], -1);
