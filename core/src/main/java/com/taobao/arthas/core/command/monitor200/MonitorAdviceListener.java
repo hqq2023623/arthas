@@ -249,8 +249,7 @@ class MonitorAdviceListener extends ReflectAdviceListenerAdapter {
 
         @Override
         public boolean equals(Object obj) {
-            if (null == obj
-                    || !(obj instanceof Key)) {
+            if (!(obj instanceof Key)) {
                 return false;
             }
             Key okey = (Key) obj;
